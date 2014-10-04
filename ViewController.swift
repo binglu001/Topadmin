@@ -31,11 +31,6 @@ class ViewController: UIViewController {
     }
     @IBAction func LoginBtn(sender: AnyObject) {
         self.httpRequest()
-        
-        
-     
-        
-        
     }
     
     func httpRequest(){
@@ -67,10 +62,12 @@ class ViewController: UIViewController {
     func execJson(result: NSDictionary!){
         
         if let tempResult = (result["status"] as NSDictionary)["code"] as? Int{
+            //test
+            self.performSegueWithIdentifier("login", sender: self)
             if tempResult == 1001{
                 //登陆验证成功
+                self.performSegueWithIdentifier("login", sender: self)
                 
-                println("success")
             }else{
                 println("fail")
             }
