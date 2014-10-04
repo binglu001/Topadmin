@@ -47,19 +47,37 @@ class ViewController: UIViewController {
         let params = ["mobile": uNameLabel.text, "pwd": pwdLabel.text]
 
         manager.responseSerializer.acceptableContentTypes = NSSet().setByAddingObject("text/html")
+        
         //构建Get
         manager.GET(url,
             parameters: params,
             success: { (operation: AFHTTPRequestOperation!,
                 responseObject: AnyObject!) in
                 println("JSON: " + responseObject.description!)
+                
+                self.execJson(responseObject as NSDictionary!)
+                
             },
             failure: { (operation: AFHTTPRequestOperation!,
                 error: NSError!) in
                 println("Error: " + error.localizedDescription)
         })
+    }
+    //解析json数据
+    func execJson(result: NSDictionary!){
         
+        if let tempResult = (result["status"] as NSDictionary)["code"] as? Int{
+            if tempResult == 1001{
+                //登陆验证成功
+                
+                println("success")
+            }else{
+                println("fail")
+            }
+            
+        }else{
         
+        }
         
     }
 
