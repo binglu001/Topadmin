@@ -10,6 +10,7 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     let cellImage = 1
     let cellLabel1 = 2
     let cellLabel2 = 3
+    let cellLabel3 = 4
     
     
     @IBOutlet weak var imageView: UIView!
@@ -59,11 +60,10 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         img.image = UIImage(named: "default.jpg")
         let url = rowData["cover"] as String
         let image = self.imageCache[url] as UIImage?
-        println(imageCache)
         
         if !(image != nil){
             let imageUrl:NSURL = NSURL(string:url)
-            println(imageUrl)
+            //println(imageUrl)
             let request: NSURLRequest = NSURLRequest(URL: imageUrl)
             //异步获取
             NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!)-> Void in
@@ -76,22 +76,22 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         }else{
             img.image = image
         }
-        
-        
-        
+
         var label1 = cell?.viewWithTag(cellLabel1) as UILabel
         var label2 = cell?.viewWithTag(cellLabel2) as UILabel
-
-        
-//        img.image = NSURL(urlrowData["cover"])
-//        img = UIImage(named: rowData["cover"] as NSString)
+        var label3 = cell?.viewWithTag(cellLabel3) as UILabel
+        //label换行
+        label1.numberOfLines = 0
+        label1.lineBreakMode = NSLineBreakMode.ByWordWrapping
         
         label1.text = rowData["content"] as NSString
         label2.text = rowData["user"]?["uname"] as NSString
-        
+
+
+        println(NSDate(timeIntervalSince1970: rowData["pubTime"] as NSTimeInterval))
+//        label3.text = rowData["pubTime"]?.data as NSString
+    
         return cell as UITableViewCell
-        
-        
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
