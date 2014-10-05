@@ -48,14 +48,13 @@ class ViewController: UIViewController {
             parameters: params,
             success: { (operation: AFHTTPRequestOperation!,
                 responseObject: AnyObject!) in
-                println("JSON: " + responseObject.description!)
-                
+                //println("JSON: " + responseObject.description!)
                 self.execJson(responseObject as NSDictionary!)
                 
             },
             failure: { (operation: AFHTTPRequestOperation!,
                 error: NSError!) in
-                println("Error: " + error.localizedDescription)
+                //println("Error: " + error.localizedDescription)
         })
     }
     //解析json数据
@@ -69,7 +68,7 @@ class ViewController: UIViewController {
                 self.performSegueWithIdentifier("login", sender: self)
                 
             }else{
-                println("fail")
+                //println("fail")
             }
             
         }else{
