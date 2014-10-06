@@ -27,8 +27,7 @@ class DetailController: UIViewController,HttpProtocol,UIWebViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
+        
     func didRecieveResult(result: NSDictionary){
         webView.delegate = self
         
@@ -40,7 +39,6 @@ class DetailController: UIViewController,HttpProtocol,UIWebViewDelegate {
         }
         
     func webViewDidStartLoad(webView: UIWebView){
-        println(3333)
         NSLog("webViewDidStartLoad")
      }
         
@@ -49,20 +47,5 @@ class DetailController: UIViewController,HttpProtocol,UIWebViewDelegate {
         println(1231231)
     }
         
-//        if (result["result"] != nil){
-////            self.listData = result["result"]?["list"] as NSArray
-//
-//            //println(self.listData)
-////            self.tableView.reloadData()
-//        }
     }
-//    
-//    func loadDataSource() {
-//        var urlString = detailURL + "\(detailID).html"
-//        var url = NSURL.URLWithString(urlString)
-//        var urlRequest = NSURLRequest(URL :NSURL.URLWithString(urlString))
-//        webView.loadRequest(urlRequest)
-//    }
-
-    
 }
