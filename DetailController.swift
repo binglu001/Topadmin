@@ -7,11 +7,19 @@
 //
 import UIKit
 
-class DetailController: UIViewController {
+class DetailController: UIViewController,HttpProtocol,UIWebViewDelegate {
+    
+    
+    @IBOutlet weak var webView: UIWebView!
+    var eHttp: HttpController = HttpController()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        let timeLineUrl = "http://top.mogujie.com/app_top_v142_twitter/note?_uid=1jf4k&_swidth=720&timestamp=1412602346&_channel=NAOtop&_atype=android&_mgj=d81f70fe2c5500d57fb2fe69eb03a4f11412602346&_sdklevel=18&_network=2&sign=zT6KqyEMlt9fF9oqROC626raReJVEQNl%2F1wEq%2FMb14euJEDWSRfBiWCISM7YBEGWO%2BhjijAT7CVtlxe%2FAPl%2BNA%3D%3D&tid=11tv0&_aver=142&_fs=NAOtop142&_did=99000537220553&_source=NAOtop142"
+        eHttp.delegate = self
+        eHttp.onSearchUrl(timeLineUrl)
 
     }
     
@@ -21,6 +29,33 @@ class DetailController: UIViewController {
     }
     
     
+    func didRecieveResult(result: NSDictionary){
+        if result["result"] != nil{
+            var urlString = "http://top.mogujie.com/top/share/note?tid=11ts8"
+            var url = NSURL.URLWithString(urlString)
+            var urlRequest = NSURLRequest(URL :NSURL.URLWithString(urlString))
+
+            webView.loadRequest(urlRequest)
+            
+        }
+        
+        func webViewDidStartLoad(webView: UIWebView){
+            NSLog("loading")
+        }
+//        if (result["result"] != nil){
+////            self.listData = result["result"]?["list"] as NSArray
+//
+//            //println(self.listData)
+////            self.tableView.reloadData()
+//        }
+    }
+//    
+//    func loadDataSource() {
+//        var urlString = detailURL + "\(detailID).html"
+//        var url = NSURL.URLWithString(urlString)
+//        var urlRequest = NSURLRequest(URL :NSURL.URLWithString(urlString))
+//        webView.loadRequest(urlRequest)
+//    }
 
     
 }
