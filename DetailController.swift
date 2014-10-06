@@ -27,7 +27,7 @@ class DetailController: UIViewController,HttpProtocol,UIWebViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-        
+    
     func didRecieveResult(result: NSDictionary){
         webView.delegate = self
         
@@ -35,9 +35,7 @@ class DetailController: UIViewController,HttpProtocol,UIWebViewDelegate {
             var url = NSURL(string: "http://top.mogujie.com/top/share/note?tid=11ts8")
             var request = NSURLRequest(URL: url)
             webView.loadRequest(request)
-            
         }
-        
     func webViewDidStartLoad(webView: UIWebView){
         NSLog("webViewDidStartLoad")
      }
