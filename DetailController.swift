@@ -9,7 +9,7 @@ import UIKit
 
 class DetailController: UIViewController,HttpProtocol,UIWebViewDelegate {
     
-    
+ 
     @IBOutlet weak var loadImg: UIActivityIndicatorView!
     @IBOutlet weak var webView: UIWebView!
     var eHttp: HttpController = HttpController()
@@ -52,6 +52,9 @@ class DetailController: UIViewController,HttpProtocol,UIWebViewDelegate {
         self.parentViewController?.didMoveToParentViewController(UIViewController())
     }
         
+    @IBAction func backBtn(sender: AnyObject) {       
+            self.performSegueWithIdentifier("back", sender: self)
+    }
         
     
 }
