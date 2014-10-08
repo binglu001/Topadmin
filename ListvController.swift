@@ -86,11 +86,18 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         
         label1.text = rowData["content"] as NSString
         label2.text = rowData["user"]?["uname"] as NSString
-        
+
         var nDF = NSDateFormatter()
         nDF.dateFormat = "YYYYmmdd"
-        
-        println(NSDate(timeIntervalSince1970: rowData["pubTime"] as NSTimeInterval))
+//        
+//        var date = NSDate()
+//        date.timeIntervalSince1970 = rowData["pubTime"]
+//        let myDateString = String(Int64(date.timeIntervalSince1970*1000))
+//        println("Seconds = \(myDateString)")
+//        
+//        Int64()
+
+//        println(String(Int64(NSDate(timeIntervalSince1970: rowData["pubTime"] as NSTimeInterval))))
     
         return cell as UITableViewCell
     }
