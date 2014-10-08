@@ -124,6 +124,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="searchObj" destination="4Wo-Po-OYt" id="pJ9-PR-Sgg"/>
                         <outlet property="tableView" destination="HKG-2q-BRP" id="WY9-QU-eOB"/>
                         <segue destination="7KA-xJ-BQr" kind="modal" identifier="detail" id="bcf-z2-aW7"/>
                     </connections>

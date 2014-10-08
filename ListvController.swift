@@ -1,9 +1,9 @@
 import UIKit
 
-class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelegate,HttpProtocol{
+class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelegate,HttpProtocol,UIScrollViewDelegate{
     
     var eHttp: HttpController = HttpController()
-    
+    @IBOutlet weak var searchObj: UISearchBar!
     var listData: NSArray = NSArray()
     var imageCache = Dictionary<String,UIImage>()
     
@@ -91,7 +91,7 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         outputFormat.locale = NSLocale(localeIdentifier: "shanghai")
         //发布时间
         let pubTime = NSDate(timeIntervalSince1970: rowData["pubTime"] as NSTimeInterval)
-        label3.text = outputFormat.stringFromDate(pubTime)        
+        label3.text = outputFormat.stringFromDate(pubTime)
         
         return cell as UITableViewCell
     }
@@ -109,5 +109,12 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
             self.tableView.reloadData()
         }
     }
+    
+    //滚动list的时候隐藏键盘
+    func scrollViewDidScroll(scrollView: UIScrollView){
+        searchObj.resignFirstResponder()
+    }
+
+
     
 }
