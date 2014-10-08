@@ -86,7 +86,7 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         
         label1.text = rowData["content"] as NSString
         label2.text = rowData["user"]?["uname"] as NSString
-
+        
         var nDF = NSDateFormatter()
         nDF.dateFormat = "YYYYmmdd"
         

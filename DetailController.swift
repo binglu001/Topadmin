@@ -10,6 +10,7 @@ import UIKit
 class DetailController: UIViewController,HttpProtocol,UIWebViewDelegate {
     
     
+    @IBOutlet weak var loadImg: UIActivityIndicatorView!
     @IBOutlet weak var webView: UIWebView!
     var eHttp: HttpController = HttpController()
 
@@ -36,14 +37,21 @@ class DetailController: UIViewController,HttpProtocol,UIWebViewDelegate {
             var request = NSURLRequest(URL: url)
             webView.loadRequest(request)
         }
+    }
+    //页面加载前
     func webViewDidStartLoad(webView: UIWebView){
-        NSLog("webViewDidStartLoad")
+        loadImg.startAnimating()
      }
-        
+    
     func webViewDidFinishLoad(webView: UIWebView){
-        NSLog("webViewDidStartLoad")
-        println(1231231)
+//        loadImg.stopAnimating()
+        loadImg.removeFromSuperview()
     }
         
+    override func dismissViewControllerAnimated(flag: Bool, completion: (() -> Void)?){
+        self.parentViewController?.didMoveToParentViewController(UIViewController())
     }
+        
+        
+    
 }
