@@ -97,14 +97,10 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         label3.text = outputFormat.stringFromDate(pubTime)
         //变量赋值为tid
 
-        //self.tid = rowData["tid"] as NSString
-
         return cell as UITableViewCell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        //self.dismissViewControllerAnimated(true, completion: nil)
-       // println(indexPath)
         let trueData: NSDictionary = self.listData[indexPath.row] as NSDictionary
         self.tid = trueData["tid"] as NSString        
         self.performSegueWithIdentifier("detail", sender: self)
@@ -114,8 +110,11 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         if segue.identifier == "detail" {
             var instance = segue.destinationViewController as DetailController
             instance.timeLineUrl = self.tid
-            
         }
+    }
+    //返回按钮
+    @IBAction func close(segue: UIStoryboardSegue){
+        
     }
     
     func didRecieveResult(result: NSDictionary){
@@ -131,6 +130,8 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     func scrollViewDidScroll(scrollView: UIScrollView){
         searchObj.resignFirstResponder()
     }
+    
+
 
 
     

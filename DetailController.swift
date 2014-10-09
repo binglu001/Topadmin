@@ -7,12 +7,12 @@
 //
 import UIKit
 
-class DetailController: UIViewController,HttpProtocol,UIWebViewDelegate {
+class DetailController: UIViewController,UIWebViewDelegate {
     
  
     @IBOutlet weak var loadImg: UIActivityIndicatorView!
     @IBOutlet weak var webView: UIWebView!
-    var eHttp: HttpController = HttpController()
+    
     var timeLineUrl: String = ""
     
     override func viewDidLoad() {
@@ -29,26 +29,15 @@ class DetailController: UIViewController,HttpProtocol,UIWebViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func didRecieveResult(result: NSDictionary){
-        
-    }
     //页面加载前
     func webViewDidStartLoad(webView: UIWebView){
         loadImg.startAnimating()
-     }
+    }
     
+    //页面加载完成
     func webViewDidFinishLoad(webView: UIWebView){
         loadImg.stopAnimating()
         loadImg.removeFromSuperview()
     }
-        
-    override func dismissViewControllerAnimated(flag: Bool, completion: (() -> Void)?){
-        self.parentViewController?.didMoveToParentViewController(UIViewController())
-    }
-        
-    @IBAction func backBtn(sender: AnyObject) {       
-            self.performSegueWithIdentifier("back", sender: self)
-    }
-        
-    
+
 }
