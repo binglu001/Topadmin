@@ -17,15 +17,11 @@ class DetailController: UIViewController,HttpProtocol,UIWebViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-            timeLineUrl = "http://top.mogujie.com/top/share/note?tid=" + timeLineUrl
-
-            var url = NSURL(string: self.timeLineUrl)
-            var request = NSURLRequest(URL: url)
-            
-            webView.loadRequest(request)
-        
-        // Do any additional setup after loading the view, typically from a nib.
+        webView.delegate = self
+        timeLineUrl = "http://top.mogujie.com/top/share/note?tid=" + timeLineUrl
+        var url = NSURL(string: self.timeLineUrl)
+        var request = NSURLRequest(URL: url)
+        webView.loadRequest(request)
     }
     
     override func didReceiveMemoryWarning() {
