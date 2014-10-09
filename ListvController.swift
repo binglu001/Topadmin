@@ -6,6 +6,8 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     @IBOutlet weak var searchObj: UISearchBar!
     var listData: NSArray = NSArray()
     var imageCache = Dictionary<String,UIImage>()
+    var tid: String = ""
+
     
     let cellImage = 1
     let cellLabel1 = 2
@@ -13,11 +15,13 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     let cellLabel3 = 4
     
     
+    
     @IBOutlet weak var imageView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+
     }
     
     override func viewDidLoad() {
@@ -53,6 +57,7 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         let cell: AnyObject? = tableView.dequeueReusableCellWithIdentifier("list", forIndexPath: indexPath)
         
         let rowData: NSDictionary = self.listData[indexPath.row] as NSDictionary
+
         
         var img = cell?.viewWithTag(cellImage) as UIImageView
         
@@ -69,9 +74,7 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
                 let imgTmp = UIImage(data: data)
                 img.image = imgTmp
                 self.imageCache[url] = imgTmp
-                
             })
-            
         }else{
             img.image = image
         }
@@ -92,13 +95,27 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         //发布时间
         let pubTime = NSDate(timeIntervalSince1970: rowData["pubTime"] as NSTimeInterval)
         label3.text = outputFormat.stringFromDate(pubTime)
-        
+        //变量赋值为tid
+
+        //self.tid = rowData["tid"] as NSString
+
         return cell as UITableViewCell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         //self.dismissViewControllerAnimated(true, completion: nil)
+       // println(indexPath)
+        let trueData: NSDictionary = self.listData[indexPath.row] as NSDictionary
+        self.tid = trueData["tid"] as NSString        
         self.performSegueWithIdentifier("detail", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "detail" {
+            var instance = segue.destinationViewController as DetailController
+            instance.timeLineUrl = self.tid
+            
+        }
     }
     
     func didRecieveResult(result: NSDictionary){
