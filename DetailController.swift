@@ -42,7 +42,7 @@ class DetailController: UIViewController,HttpProtocol,UIWebViewDelegate {
      }
     
     func webViewDidFinishLoad(webView: UIWebView){
-//        loadImg.stopAnimating()
+        loadImg.stopAnimating()
         loadImg.removeFromSuperview()
     }
         
