@@ -140,7 +140,7 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     }
     
     //下拉刷新方法
-    func refreshData() {    
+    func refreshData() {
         self.tableView.reloadData()
         self.refreshControl.endRefreshing()
     }
