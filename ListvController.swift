@@ -14,6 +14,7 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     let cellLabel2 = 3
     let cellLabel3 = 4
     
+    let refreshControl = UIRefreshControl()
     
     
     @IBOutlet weak var imageView: UIView!
@@ -35,10 +36,10 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         eHttp.onSearchUrl(timeLineUrl)
 
         //添加下拉刷新手势
-        let refreshControl = UIRefreshControl()
+
         refreshControl.addTarget(self, action: "refreshData", forControlEvents: UIControlEvents.ValueChanged)
         refreshControl.attributedTitle = NSAttributedString(string: "松手刷新新闻")
-        tableView.addSubview(refreshControl)                        
+        tableView.addSubview(refreshControl)
     }
     
     override func didReceiveMemoryWarning() {
@@ -138,6 +139,11 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         searchObj.resignFirstResponder()
     }
     
+    //下拉刷新方法
+    func refreshData() {    
+        self.tableView.reloadData()
+        self.refreshControl.endRefreshing()
+    }
 
 
 
