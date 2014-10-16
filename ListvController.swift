@@ -25,6 +25,43 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
 
     }
     
+    var fakeData:NSMutableArray?
+    
+    
+    
+    func setupRefresh(){
+        self.tableView.addHeaderWithCallback({
+            self.fakeData!.removeAllObjects()
+            for (var i:Int = 0; i<15; i++) {
+                var text:String = "内容"+String( arc4random_uniform(10000))
+                self.fakeData!.addObject(text)
+            }
+            
+            let delayInSeconds:Int64 =  1000000000  * 2
+            
+            var popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW,delayInSeconds)
+            dispatch_after(popTime, dispatch_get_main_queue(), {
+                self.tableView.reloadData()
+                self.tableView.headerEndRefreshing()
+            })
+        })
+        
+        self.tableView.addFooterWithCallback({
+            for (var i:Int = 0; i<10; i++) {
+                var text:String = "内容"+String( arc4random_uniform(10000))
+                self.fakeData!.addObject(text)
+            }
+            let delayInSeconds:Int64 = 1000000000 * 2
+            var popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW,delayInSeconds)
+            dispatch_after(popTime, dispatch_get_main_queue(), {
+                self.tableView.reloadData()
+                self.tableView.footerEndRefreshing()
+                //self.tableView.setFooterHidden(true)
+            })
+            println(123)
+        })
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -33,10 +70,20 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         
         eHttp.delegate = self
         eHttp.onSearchUrl(timeLineUrl)
-        //添加下拉刷新手势
-        refreshControl.addTarget(self, action: "refreshData", forControlEvents: UIControlEvents.ValueChanged)
-        refreshControl.attributedTitle = NSAttributedString(string: "松手刷新")
-        tableView.addSubview(refreshControl)
+        
+        fakeData = NSMutableArray()
+        for (var i:Int = 0; i<15; i++) {
+            var text:String = "内容"+String( arc4random_uniform(10000))
+            self.fakeData!.addObject(text)
+        }
+        
+        self.tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "TableViewCellIdentifier")
+        self.setupRefresh()
+
+//        //添加下拉刷新手势
+//        refreshControl.addTarget(self, action: "refreshData", forControlEvents: UIControlEvents.ValueChanged)
+//        refreshControl.attributedTitle = NSAttributedString(string: "松手刷新")
+//        tableView.addSubview(refreshControl)
     }
     
     override func didReceiveMemoryWarning() {
@@ -101,7 +148,8 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         let pubTime = NSDate(timeIntervalSince1970: rowData["pubTime"] as NSTimeInterval)
         label3.text = outputFormat.stringFromDate(pubTime)
         //变量赋值为tid
-
+        label1.text = fakeData?.objectAtIndex(indexPath.row) as NSString
+        
         return cell as UITableViewCell
     }
     
@@ -139,7 +187,6 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     //下拉刷新方法
     func refreshData() {
         self.tableView.reloadData()
-        self.refreshControl.endRefreshing()
     }
 
 
