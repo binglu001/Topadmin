@@ -4,7 +4,8 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     
     var eHttp: HttpController = HttpController()
     @IBOutlet weak var searchObj: UISearchBar!
-    var listData: NSArray = NSArray()
+    var listData: NSMutableArray = NSMutableArray()
+    var tmpListData: NSMutableArray = NSMutableArray()
     var imageCache = Dictionary<String,UIImage>()
     var tid: String = ""
 
@@ -16,6 +17,8 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     
     let refreshControl = UIRefreshControl()
     
+    var timeLineUrl = "http://top.mogujie.com/app_top_v142_timeline/pubtimeline?_uid=1jf4k&_swidth=720&timestamp=1412437672&_channel=NAOtop&_atype=android&_mgj=541648ca87e6ca9e8d9a1790639c34351412437672&_sdklevel=18&_network=2&sign=pZqBZDt0XE1Ss7UX0u6UxfYr1RtfyOuyU04ahLrLpHGuJEDWSRfBiWCISM7YBEGWO%2BhjijAT7CVtlxe%2FAPl%2BNA%3D%3D&mbook=&_aver=142&_fs=NAOtop142&_did=99000537220553&_source=NAOtop142"
+//    var timeLineUrl = "http://top.mogujie.com/top/zadmin/app/index"
     
     @IBOutlet weak var imageView: UIView!
     @IBOutlet weak var tableView: UITableView!
@@ -27,11 +30,10 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     
     var fakeData:NSMutableArray?
     
-    
-    
     func setupRefresh(){
         self.tableView.addHeaderWithCallback({
             self.fakeData!.removeAllObjects()
+            
             for (var i:Int = 0; i<15; i++) {
                 var text:String = "内容"+String( arc4random_uniform(10000))
                 self.fakeData!.addObject(text)
@@ -47,31 +49,56 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         })
         
         self.tableView.addFooterWithCallback({
-            for (var i:Int = 0; i<10; i++) {
-                var text:String = "内容"+String( arc4random_uniform(10000))
-                self.fakeData!.addObject(text)
-            }
+            
+            
+            self.timeLineUrl = "http://top.mogujie.com/app_top_v142_timeline/pubtimeline?_uid=1jf4k&_swidth=720&timestamp=1413532221&_channel=NAOtop&_atype=android&_mgj=2ed4a463bc9b925537c9a5821b918aa91413532221&_sdklevel=18&_network=2&sign=yXshgzQB2jFUmr9dDC77s30sY%2FbIIyjn%2FN0aOOoIWSl%2FwENXkMzd0r4%2BHQ6z3qfTMPbY%2BKVZPo7RkUQWK3AROw%3D%3D&mbook=&_aver=142&_fs=NAOtop142&_did=99000537220553&_source=NAOtop142"
+            self.eHttp.delegate = self
+            self.eHttp.onSearchUrl(self.timeLineUrl)
+
+            
+            
+    //        self.listData.addObject(self.tmpListData)
+println(self.listData)
+//            for (var i: Int = 0; i < 10; i++){
+//                self.tableView.insertRowsAtIndexPaths(i, Fade)
+
+  //          }
+                
+            
+
+            
+//            self.listData.setValue(<#value: AnyObject!#>, forUndefinedKey: <#String!#>)
+//            
+//            
+//            for (var i:Int = 0; i<10; i++) {
+//                var text:String = "内容"+String( arc4random_uniform(10000))
+//                self.fakeData!.addObject(text)
+//            }
+
             let delayInSeconds:Int64 = 1000000000 * 2
             var popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW,delayInSeconds)
             dispatch_after(popTime, dispatch_get_main_queue(), {
+
                 self.tableView.reloadData()
                 self.tableView.footerEndRefreshing()
                 //self.tableView.setFooterHidden(true)
             })
-            println(123)
         })
     }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let timeLineUrl = "http://top.mogujie.com/app_top_v142_timeline/pubtimeline?_uid=1jf4k&_swidth=720&timestamp=1412437672&_channel=NAOtop&_atype=android&_mgj=541648ca87e6ca9e8d9a1790639c34351412437672&_sdklevel=18&_network=2&sign=pZqBZDt0XE1Ss7UX0u6UxfYr1RtfyOuyU04ahLrLpHGuJEDWSRfBiWCISM7YBEGWO%2BhjijAT7CVtlxe%2FAPl%2BNA%3D%3D&mbook=&_aver=142&_fs=NAOtop142&_did=99000537220553&_source=NAOtop142"
+        self.listData = self.tmpListData
         
         eHttp.delegate = self
         eHttp.onSearchUrl(timeLineUrl)
         
         fakeData = NSMutableArray()
+        
         for (var i:Int = 0; i<15; i++) {
             var text:String = "内容"+String( arc4random_uniform(10000))
             self.fakeData!.addObject(text)
@@ -92,19 +119,13 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+        self.listData = self.tmpListData
         return listData.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         
-//        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "list")
-//        
-//        let rowData: NSDictionary = self.listData[indexPath.row] as NSDictionary
-//        cell.textLabel?.text = rowData["cover"] as String
-//        cell.detailTextLabel?.text = rowData["content"] as NSString
-//        cell.imageView?.image = UIImage(named: "http://s8.mogucdn.com//b7//pic//141004//1e12tm_ieygmzbsmyydem3cmmytambqmmyde_512x343.jpg_640x690.jpg")
-//
-//        return cell
+        self.listData = self.tmpListData
         
         let cell: AnyObject? = tableView.dequeueReusableCellWithIdentifier("list", forIndexPath: indexPath)
         
@@ -131,6 +152,7 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
             img.image = image
         }
 
+
         var label1 = cell?.viewWithTag(cellLabel1) as UILabel
         var label2 = cell?.viewWithTag(cellLabel2) as UILabel
         var label3 = cell?.viewWithTag(cellLabel3) as UILabel
@@ -147,8 +169,10 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         //发布时间
         let pubTime = NSDate(timeIntervalSince1970: rowData["pubTime"] as NSTimeInterval)
         label3.text = outputFormat.stringFromDate(pubTime)
+        
         //变量赋值为tid
-        label1.text = fakeData?.objectAtIndex(indexPath.row) as NSString
+        //label1.text = fakeData?.objectAtIndex(indexPath.row) as NSString
+        
         
         return cell as UITableViewCell
     }
@@ -171,9 +195,8 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     }
     
     func didRecieveResult(result: NSDictionary){
-
         if (result["result"] != nil){
-            self.listData = result["result"]?["list"] as NSArray
+            self.tmpListData = result["result"]?["list"] as NSMutableArray
             //println(self.listData)
             self.tableView.reloadData()
         }
