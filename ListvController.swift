@@ -58,7 +58,7 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
             
             
     //        self.listData.addObject(self.tmpListData)
-println(self.listData)
+
 //            for (var i: Int = 0; i < 10; i++){
 //                self.tableView.insertRowsAtIndexPaths(i, Fade)
 
@@ -124,7 +124,13 @@ println(self.listData)
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         
-        self.listData = self.tmpListData
+        if self.listData.count == 0{
+            self.listData = self.tmpListData
+        }else{
+           
+//            self.listData.addObject(self.tmpListData)
+        }
+        
         
         var cell: AnyObject? = tableView.dequeueReusableCellWithIdentifier("list", forIndexPath: indexPath)
         
