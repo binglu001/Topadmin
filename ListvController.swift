@@ -78,7 +78,6 @@ println(self.listData)
             let delayInSeconds:Int64 = 1000000000 * 2
             var popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW,delayInSeconds)
             dispatch_after(popTime, dispatch_get_main_queue(), {
-
                 self.tableView.reloadData()
                 self.tableView.footerEndRefreshing()
                 //self.tableView.setFooterHidden(true)
@@ -127,7 +126,7 @@ println(self.listData)
         
         self.listData = self.tmpListData
         
-        let cell: AnyObject? = tableView.dequeueReusableCellWithIdentifier("list", forIndexPath: indexPath)
+        var cell: AnyObject? = tableView.dequeueReusableCellWithIdentifier("list", forIndexPath: indexPath)
         
         let rowData: NSDictionary = self.listData[indexPath.row] as NSDictionary
 
@@ -170,11 +169,51 @@ println(self.listData)
         let pubTime = NSDate(timeIntervalSince1970: rowData["pubTime"] as NSTimeInterval)
         label3.text = outputFormat.stringFromDate(pubTime)
         
+        if cell == nil{
+            cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "list") as UITableViewCell
+            cell?.contentView.addSubview(label1)
+            cell?.contentView.addSubview(label2)
+            cell?.contentView.addSubview(label3)
+        
+        }
+        
         //变量赋值为tid
         //label1.text = fakeData?.objectAtIndex(indexPath.row) as NSString
         
         
         return cell as UITableViewCell
+        
+        
+        
+        
+        //var cell1: UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("list", forIndexPath: indexPath) as UITableViewCell
+       
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
