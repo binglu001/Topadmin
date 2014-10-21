@@ -28,17 +28,8 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
 
     }
     
-    var fakeData:NSMutableArray?
-    
     func setupRefresh(){
         self.tableView.addHeaderWithCallback({
-            self.fakeData!.removeAllObjects()
-            
-            for (var i:Int = 0; i<15; i++) {
-                var text:String = "内容"+String( arc4random_uniform(10000))
-                self.fakeData!.addObject(text)
-            }
-            
             let delayInSeconds:Int64 =  1000000000  * 2
             
             var popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW,delayInSeconds)
@@ -50,30 +41,9 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         
         self.tableView.addFooterWithCallback({
             
-            
             self.timeLineUrl = "http://top.mogujie.com/app_top_v142_timeline/pubtimeline?_uid=1jf4k&_swidth=720&timestamp=1413532221&_channel=NAOtop&_atype=android&_mgj=2ed4a463bc9b925537c9a5821b918aa91413532221&_sdklevel=18&_network=2&sign=yXshgzQB2jFUmr9dDC77s30sY%2FbIIyjn%2FN0aOOoIWSl%2FwENXkMzd0r4%2BHQ6z3qfTMPbY%2BKVZPo7RkUQWK3AROw%3D%3D&mbook=&_aver=142&_fs=NAOtop142&_did=99000537220553&_source=NAOtop142"
             self.eHttp.delegate = self
             self.eHttp.onSearchUrl(self.timeLineUrl)
-
-            
-            
-    //        self.listData.addObject(self.tmpListData)
-
-//            for (var i: Int = 0; i < 10; i++){
-//                self.tableView.insertRowsAtIndexPaths(i, Fade)
-
-  //          }
-                
-            
-
-            
-//            self.listData.setValue(<#value: AnyObject!#>, forUndefinedKey: <#String!#>)
-//            
-//            
-//            for (var i:Int = 0; i<10; i++) {
-//                var text:String = "内容"+String( arc4random_uniform(10000))
-//                self.fakeData!.addObject(text)
-//            }
 
             let delayInSeconds:Int64 = 1000000000 * 2
             var popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW,delayInSeconds)
@@ -91,19 +61,8 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        self.listData = self.tmpListData
-        
         eHttp.delegate = self
         eHttp.onSearchUrl(timeLineUrl)
-        
-        fakeData = NSMutableArray()
-        
-        for (var i:Int = 0; i<15; i++) {
-            var text:String = "内容"+String( arc4random_uniform(10000))
-            self.fakeData!.addObject(text)
-        }
-        
-        self.tableView.registerClass(UITableViewCell.classForCoder(), forCellReuseIdentifier: "TableViewCellIdentifier")
         self.setupRefresh()
 
 //        //添加下拉刷新手势
@@ -118,21 +77,25 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
-        self.listData = self.tmpListData
+        if(self.listData.count == 0){
+            self.listData = self.tmpListData
+        }else{
+            if(self.tmpListData.count != 0){                
+                for(var i:Int = 0; i < self.tmpListData.count; i++){
+                    self.listData.addObject(self.tmpListData[i])
+                }
+            }
+        }
         return listData.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         
-        if self.listData.count == 0{
+        if(self.listData.count == 0){
             self.listData = self.tmpListData
-        }else{
-           
-//            self.listData.addObject(self.tmpListData)
         }
-        
-        
         var cell: AnyObject? = tableView.dequeueReusableCellWithIdentifier("list", forIndexPath: indexPath)
+
         
         let rowData: NSDictionary = self.listData[indexPath.row] as NSDictionary
 
@@ -157,7 +120,6 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
             img.image = image
         }
 
-
         var label1 = cell?.viewWithTag(cellLabel1) as UILabel
         var label2 = cell?.viewWithTag(cellLabel2) as UILabel
         var label3 = cell?.viewWithTag(cellLabel3) as UILabel
@@ -175,51 +137,7 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         let pubTime = NSDate(timeIntervalSince1970: rowData["pubTime"] as NSTimeInterval)
         label3.text = outputFormat.stringFromDate(pubTime)
         
-        if cell == nil{
-            cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "list") as UITableViewCell
-            cell?.contentView.addSubview(label1)
-            cell?.contentView.addSubview(label2)
-            cell?.contentView.addSubview(label3)
-        
-        }
-        
-        //变量赋值为tid
-        //label1.text = fakeData?.objectAtIndex(indexPath.row) as NSString
-        
-        
         return cell as UITableViewCell
-        
-        
-        
-        
-        //var cell1: UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("list", forIndexPath: indexPath) as UITableViewCell
-       
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
