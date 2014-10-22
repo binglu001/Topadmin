@@ -6,6 +6,7 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     @IBOutlet weak var searchObj: UISearchBar!
     var listData: NSMutableArray = NSMutableArray()
     var tmpListData: NSMutableArray = NSMutableArray()
+    var pager:Int = 1
     var imageCache = Dictionary<String,UIImage>()
     var tid: String = ""
 
@@ -38,12 +39,10 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         })
         
         self.tableView.addFooterWithCallback({
-            
-   //         self.timeLineUrl = "http://top.mogujie.com/app_top_v142_timeline/pubtimeline?_uid=1jf4k&_swidth=720&timestamp=1413532221&_channel=NAOtop&_atype=android&_mgj=2ed4a463bc9b925537c9a5821b918aa91413532221&_sdklevel=18&_network=2&sign=yXshgzQB2jFUmr9dDC77s30sY%2FbIIyjn%2FN0aOOoIWSl%2FwENXkMzd0r4%2BHQ6z3qfTMPbY%2BKVZPo7RkUQWK3AROw%3D%3D&mbook=&_aver=142&_fs=NAOtop142&_did=99000537220553&_source=NAOtop142"
-            self.timeLineUrl = "http://top.mogujie.com/top/zadmin/app/yituijian?sign=Mx3KdFcp1pGbaU4PLk82p9sAON6%2FXfJwJjiKf%2FjNMD8J3YyXyjPQS%2FUUQmMMjduXNoZXMsS6cXMF66wmRMs%2Bsw%3D%3D"
+            var nextPage = String(self.pager + 1)
+            var tmpTimeLineUrl = self.timeLineUrl + "&page=" + nextPage as NSString
             self.eHttp.delegate = self
-            self.eHttp.onSearchUrl(self.timeLineUrl)
-
+            self.eHttp.onSearchUrl(tmpTimeLineUrl)
             let delayInSeconds:Int64 = 1000000000 * 2
             var popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW,delayInSeconds)
             dispatch_after(popTime, dispatch_get_main_queue(), {
@@ -53,8 +52,6 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
             })
         })
     }
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,10 +90,6 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         
-        if(self.listData.count == 0 && self.tmpListData.count != 0){
-            self.listData = self.tmpListData
-            self.tmpListData.removeAllObjects()
-        }
         var cell: AnyObject? = tableView.dequeueReusableCellWithIdentifier("list", forIndexPath: indexPath)
 
         
@@ -164,9 +157,8 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     
     func didRecieveResult(result: NSDictionary){
         if (result["result"] != nil){
-            self.tmpListData.removeAllObjects()
             self.tmpListData = result["result"]?["list"] as NSMutableArray
-            //println(self.listData)
+            self.pager = result["result"]?["page"] as NSNumber
             self.tableView.reloadData()
         }
     }
