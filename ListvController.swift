@@ -46,7 +46,7 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
             let delayInSeconds:Int64 = 1000000000 * 2
             var popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW,delayInSeconds)
             dispatch_after(popTime, dispatch_get_main_queue(), {
-                self.tableView.reloadData()
+//                self.tableView.reloadData()
                 self.tableView.footerEndRefreshing()
                 //self.tableView.setFooterHidden(true)
             })
@@ -73,16 +73,18 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         if(self.listData.count == 0){
+
             if(self.tmpListData.count != 0){
+
                 self.listData = self.tmpListData
             }
         }else{
+
             if(self.tmpListData.count != 0){
                 var tmpListDataCount = self.tmpListData.count
                     for(var i:Int = 0; i < tmpListDataCount; i++){
                         self.listData.addObject(self.tmpListData[i])
                     }
-  //              self.tmpListData.removeAllObjects()
             }
         }
         return listData.count
