@@ -18,7 +18,6 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     
     let refreshControl = UIRefreshControl()
     
- // var timeLineUrl = "http://top.mogujie.com/app_top_v142_timeline/pubtimeline?_uid=1jf4k&_swidth=720&timestamp=1412437672&_channel=NAOtop&_atype=android&_mgj=541648ca87e6ca9e8d9a1790639c34351412437672&_sdklevel=18&_network=2&sign=pZqBZDt0XE1Ss7UX0u6UxfYr1RtfyOuyU04ahLrLpHGuJEDWSRfBiWCISM7YBEGWO%2BhjijAT7CVtlxe%2FAPl%2BNA%3D%3D&mbook=&_aver=142&_fs=NAOtop142&_did=99000537220553&_source=NAOtop142"
     var timeLineUrl = "http://top.mogujie.com/top/zadmin/app/yituijian?sign=Mx3KdFcp1pGbaU4PLk82p9sAON6%2FXfJwJjiKf%2FjNMD8J3YyXyjPQS%2FUUQmMMjduXNoZXMsS6cXMF66wmRMs%2Bsw%3D%3D"
     
     @IBOutlet weak var imageView: UIView!
@@ -46,9 +45,7 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
             let delayInSeconds:Int64 = 1000000000 * 2
             var popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW,delayInSeconds)
             dispatch_after(popTime, dispatch_get_main_queue(), {
-//                self.tableView.reloadData()
                 self.tableView.footerEndRefreshing()
-                //self.tableView.setFooterHidden(true)
             })
         })
     }
@@ -60,11 +57,6 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         eHttp.delegate = self
         eHttp.onSearchUrl(timeLineUrl)
         self.setupRefresh()
-
-//        //添加下拉刷新手势
-//        refreshControl.addTarget(self, action: "refreshData", forControlEvents: UIControlEvents.ValueChanged)
-//        refreshControl.attributedTitle = NSAttributedString(string: "松手刷新")
-//        tableView.addSubview(refreshControl)
     }
     
     override func didReceiveMemoryWarning() {
@@ -108,7 +100,7 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
             let image = self.imageCache[url] as UIImage?
             if !(image != nil){
                 let imageUrl:NSURL = NSURL(string:url)
-                //println(imageUrl)
+
                 let request: NSURLRequest = NSURLRequest(URL: imageUrl)
                 //异步获取
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse!,data: NSData!,error: NSError!)-> Void in
@@ -154,13 +146,13 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     }
     //返回按钮
     @IBAction func close(segue: UIStoryboardSegue){
-//        self.tmpListData.removeAllObjects()
+
     }
     
     func didRecieveResult(result: NSDictionary){
         if (result["result"] != nil){
-            self.tmpListData = result["result"]?["list"] as NSMutableArray
-            self.pager = result["result"]?["page"] as NSNumber
+            self.tmpListData = result["result"]?["list"] as NSMutableArray  //list主要数据
+            self.pager = result["result"]?["page"] as NSNumber  //分页显示
             self.tableView.reloadData()
         }
     }
