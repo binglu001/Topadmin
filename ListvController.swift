@@ -17,16 +17,14 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     
     let refreshControl = UIRefreshControl()
     
-  //  var timeLineUrl = "http://top.mogujie.com/app_top_v142_timeline/pubtimeline?_uid=1jf4k&_swidth=720&timestamp=1412437672&_channel=NAOtop&_atype=android&_mgj=541648ca87e6ca9e8d9a1790639c34351412437672&_sdklevel=18&_network=2&sign=pZqBZDt0XE1Ss7UX0u6UxfYr1RtfyOuyU04ahLrLpHGuJEDWSRfBiWCISM7YBEGWO%2BhjijAT7CVtlxe%2FAPl%2BNA%3D%3D&mbook=&_aver=142&_fs=NAOtop142&_did=99000537220553&_source=NAOtop142"
-    var timeLineUrl = "http://top.mogujie.com/top/zadmin/app/index?sign=Mx3KdFcp1pGbaU4PLk82p9sAON6%2FXfJwJjiKf%2FjNMD8J3YyXyjPQS%2FUUQmMMjduXNoZXMsS6cXMF66wmRMs%2Bsw%3D%3D"
-    
+ // var timeLineUrl = "http://top.mogujie.com/app_top_v142_timeline/pubtimeline?_uid=1jf4k&_swidth=720&timestamp=1412437672&_channel=NAOtop&_atype=android&_mgj=541648ca87e6ca9e8d9a1790639c34351412437672&_sdklevel=18&_network=2&sign=pZqBZDt0XE1Ss7UX0u6UxfYr1RtfyOuyU04ahLrLpHGuJEDWSRfBiWCISM7YBEGWO%2BhjijAT7CVtlxe%2FAPl%2BNA%3D%3D&mbook=&_aver=142&_fs=NAOtop142&_did=99000537220553&_source=NAOtop142"
+    var timeLineUrl = "http://top.mogujie.com/top/zadmin/app/yituijian?sign=Mx3KdFcp1pGbaU4PLk82p9sAON6%2FXfJwJjiKf%2FjNMD8J3YyXyjPQS%2FUUQmMMjduXNoZXMsS6cXMF66wmRMs%2Bsw%3D%3D"
     
     @IBOutlet weak var imageView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-
     }
     
     func setupRefresh(){
@@ -41,8 +39,8 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         
         self.tableView.addFooterWithCallback({
             
-//    self.timeLineUrl = "http://top.mogujie.com/app_top_v142_timeline/pubtimeline?_uid=1jf4k&_swidth=720&timestamp=1413532221&_channel=NAOtop&_atype=android&_mgj=2ed4a463bc9b925537c9a5821b918aa91413532221&_sdklevel=18&_network=2&sign=yXshgzQB2jFUmr9dDC77s30sY%2FbIIyjn%2FN0aOOoIWSl%2FwENXkMzd0r4%2BHQ6z3qfTMPbY%2BKVZPo7RkUQWK3AROw%3D%3D&mbook=&_aver=142&_fs=NAOtop142&_did=99000537220553&_source=NAOtop142"
-            self.timeLineUrl = "http://top.mogujie.com/top/zadmin/app/index?sign=Mx3KdFcp1pGbaU4PLk82p9sAON6%2FXfJwJjiKf%2FjNMD8J3YyXyjPQS%2FUUQmMMjduXNoZXMsS6cXMF66wmRMs%2Bsw%3D%3D"
+   //         self.timeLineUrl = "http://top.mogujie.com/app_top_v142_timeline/pubtimeline?_uid=1jf4k&_swidth=720&timestamp=1413532221&_channel=NAOtop&_atype=android&_mgj=2ed4a463bc9b925537c9a5821b918aa91413532221&_sdklevel=18&_network=2&sign=yXshgzQB2jFUmr9dDC77s30sY%2FbIIyjn%2FN0aOOoIWSl%2FwENXkMzd0r4%2BHQ6z3qfTMPbY%2BKVZPo7RkUQWK3AROw%3D%3D&mbook=&_aver=142&_fs=NAOtop142&_did=99000537220553&_source=NAOtop142"
+            self.timeLineUrl = "http://top.mogujie.com/top/zadmin/app/yituijian?sign=Mx3KdFcp1pGbaU4PLk82p9sAON6%2FXfJwJjiKf%2FjNMD8J3YyXyjPQS%2FUUQmMMjduXNoZXMsS6cXMF66wmRMs%2Bsw%3D%3D"
             self.eHttp.delegate = self
             self.eHttp.onSearchUrl(self.timeLineUrl)
 
@@ -74,17 +72,20 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         if(self.listData.count == 0){
-            self.listData = self.tmpListData
+            if(self.tmpListData.count != 0){
+                self.listData = self.tmpListData
+            }
         }else{
             if(self.tmpListData.count != 0){
-                for(var i:Int = 0; i < self.tmpListData.count; i++){
-                    self.listData.addObject(self.tmpListData[i])
-                }
+                var tmpListDataCount = self.tmpListData.count
+                    for(var i:Int = 0; i < tmpListDataCount; i++){
+                        self.listData.addObject(self.tmpListData[i])
+                    }
+  //              self.tmpListData.removeAllObjects()
             }
         }
         return listData.count
@@ -92,8 +93,9 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
         
-        if(self.listData.count == 0){
+        if(self.listData.count == 0 && self.tmpListData.count != 0){
             self.listData = self.tmpListData
+            self.tmpListData.removeAllObjects()
         }
         var cell: AnyObject? = tableView.dequeueReusableCellWithIdentifier("list", forIndexPath: indexPath)
 
@@ -157,11 +159,12 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     }
     //返回按钮
     @IBAction func close(segue: UIStoryboardSegue){
-        
+//        self.tmpListData.removeAllObjects()
     }
     
     func didRecieveResult(result: NSDictionary){
         if (result["result"] != nil){
+            self.tmpListData.removeAllObjects()
             self.tmpListData = result["result"]?["list"] as NSMutableArray
             //println(self.listData)
             self.tableView.reloadData()
