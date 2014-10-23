@@ -159,7 +159,7 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     
     //滚动list的时候隐藏键盘
     func scrollViewDidScroll(scrollView: UIScrollView){
-        searchObj.resignFirstResponder()
+        //searchObj.resignFirstResponder()
     }
     
     //下拉刷新方法
