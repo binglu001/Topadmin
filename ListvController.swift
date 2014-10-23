@@ -92,7 +92,7 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         
         var img = cell?.viewWithTag(cellImage) as UIImageView
         
-        img.image = UIImage(named: "default.jpg")
+        img.image = UIImage(named: "default.png")
         
         let url = rowData["cover"] as String!
         
