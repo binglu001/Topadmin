@@ -39,7 +39,7 @@ class secondPoolController: UIViewController ,UITableViewDataSource,UITableViewD
             let delayInSeconds:Int64 =  1000000000  * 2
             var popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW,delayInSeconds)
             dispatch_after(popTime, dispatch_get_main_queue(), {
-                self.tableView.reloadData()
+
                 self.tableView.headerEndRefreshing()
             })
         })
@@ -156,8 +156,10 @@ class secondPoolController: UIViewController ,UITableViewDataSource,UITableViewD
         
     }
     
+    
     func didRecieveResult(result: NSDictionary){
-        if (result["result"] != nil){
+        
+        if (result["result"]?["list"] != nil && result["result"]?["isEnd"] as NSNumber != 1){
             self.tmpListData = result["result"]?["list"] as NSMutableArray  //list主要数据
             self.pager = result["result"]?["page"] as NSNumber  //分页显示
             self.tableView.reloadData()
