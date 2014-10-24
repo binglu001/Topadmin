@@ -20,9 +20,14 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
     
     var timeLineUrl = "http://top.mogujie.com/top/zadmin/app/yituijian?sign=Mx3KdFcp1pGbaU4PLk82p9sAON6%2FXfJwJjiKf%2FjNMD8J3YyXyjPQS%2FUUQmMMjduXNoZXMsS6cXMF66wmRMs%2Bsw%3D%3D"
     
-    @IBOutlet weak var imageView: UIView!
-    @IBOutlet weak var tableView: UITableView!
+//   @IBOutlet weak var imageView: UIView!
+//    @IBOutlet weak var tableView: UITableView!
     
+    
+    
+    @IBOutlet var imageView: UIView!
+    @IBOutlet weak var tableView: UITableView!
+
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
