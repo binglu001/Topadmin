@@ -20,14 +20,6 @@ class darenPoolController: UIViewController ,UITableViewDataSource,UITableViewDe
     
     var timeLineUrl = "http://top.mogujie.com/top/zadmin/app/daren?sign=Mx3KdFcp1pGbaU4PLk82p9sAON6%2FXfJwJjiKf%2FjNMD8J3YyXyjPQS%2FUUQmMMjduXNoZXMsS6cXMF66wmRMs%2Bsw%3D%3D"
     
-    //   @IBOutlet weak var imageView: UIView!
-    //    @IBOutlet weak var tableView: UITableView!
-    
-    
-    
-//    @IBOutlet var imageView: UIView!
-//    @IBOutlet weak var tableView: UITableView!
-    
     @IBOutlet var imageView: UIView!
     @IBOutlet weak var tableView: UITableView!
     required init(coder aDecoder: NSCoder) {
@@ -71,6 +63,7 @@ class darenPoolController: UIViewController ,UITableViewDataSource,UITableViewDe
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+        
         if(self.listData.count == 0){
             
             if(self.tmpListData.count != 0){
@@ -78,13 +71,14 @@ class darenPoolController: UIViewController ,UITableViewDataSource,UITableViewDe
                 self.listData = self.tmpListData
             }
         }else{
-            
-            if(self.tmpListData.count != 0){
-                var tmpListDataCount = self.tmpListData.count
-                for(var i:Int = 0; i < tmpListDataCount; i++){
-                    self.listData.addObject(self.tmpListData[i])
+            if(self.listData != self.tmpListData){
+                if(self.tmpListData.count != 0){
+                    var tmpListDataCount = self.tmpListData.count
+                    for(var i:Int = 0; i < tmpListDataCount; i++){
+                        self.listData.addObject(self.tmpListData[i])
+                    }
                 }
-            }
+            }            
         }
         return listData.count
     }
