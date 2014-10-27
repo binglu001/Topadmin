@@ -39,6 +39,7 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
             dispatch_after(popTime, dispatch_get_main_queue(), {
 
                 self.tableView.headerEndRefreshing()
+
             })
         })
         
@@ -51,6 +52,15 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
             var popTime:dispatch_time_t = dispatch_time(DISPATCH_TIME_NOW,delayInSeconds)
             dispatch_after(popTime, dispatch_get_main_queue(), {
                 self.tableView.footerEndRefreshing()
+                if(self.tmpListData != self.listData){
+                    if(self.tmpListData.count != 0){
+                        var tmpListDataCount = self.tmpListData.count
+                        for(var i:Int = 0; i < tmpListDataCount; i++){
+                            self.listData.addObject(self.tmpListData[i])
+                        }
+                    }
+                    self.tmpListData.removeAllObjects()
+                }
             })
         })
     }
@@ -74,14 +84,6 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
             if(self.tmpListData.count != 0){
 
                 self.listData = self.tmpListData
-            }
-        }else{
-
-            if(self.tmpListData.count != 0){
-                var tmpListDataCount = self.tmpListData.count
-                    for(var i:Int = 0; i < tmpListDataCount; i++){
-                        self.listData.addObject(self.tmpListData[i])
-                    }
             }
         }
         return listData.count
