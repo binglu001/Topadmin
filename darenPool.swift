@@ -122,7 +122,7 @@ class darenPoolController: UIViewController ,UITableViewDataSource,UITableViewDe
         
         label1.text = rowData["content"]? as NSString
         label2.text = rowData["user"]?["uname"] as NSString
-        
+
         var outputFormat = NSDateFormatter()
         outputFormat.dateFormat = "yyyy/MM/dd HH:mm:ss"
         outputFormat.locale = NSLocale(localeIdentifier: "shanghai")

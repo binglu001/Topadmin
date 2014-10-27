@@ -122,11 +122,12 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         var label1 = cell?.viewWithTag(cellLabel1) as UILabel
         var label2 = cell?.viewWithTag(cellLabel2) as UILabel
         var label3 = cell?.viewWithTag(cellLabel3) as UILabel
+        
         //label换行
         label1.numberOfLines = 0
         label1.lineBreakMode = NSLineBreakMode.ByWordWrapping
         
-        label1.text = rowData["content"]? as NSString
+        label1.text = rowData["content"]? as NSString                      
         label2.text = rowData["user"]?["uname"] as NSString
 
         var outputFormat = NSDateFormatter()
