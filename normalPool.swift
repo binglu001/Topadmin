@@ -179,6 +179,11 @@ class normalPoolController: UIViewController ,UITableViewDataSource,UITableViewD
         self.tableView.reloadData()
     }
     
+    //筛选action
+    
+    @IBAction func filter(sender: AnyObject) {
+        toggleSideMenuView()
+    }
     
     
     

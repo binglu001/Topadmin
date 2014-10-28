@@ -274,7 +274,7 @@
         <!--达人池子-->
         <scene sceneID="ozk-rA-2SQ">
             <objects>
-                <viewController id="bBi-xi-zWa" customClass="darenPoolController" customModule="Topadmin" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController2" id="bBi-xi-zWa" customClass="darenPoolController" customModule="Topadmin" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fXi-Fz-40H">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -342,7 +342,7 @@
         <!--普通池子-->
         <scene sceneID="8FY-1Z-qOO">
             <objects>
-                <viewController id="Dy8-jV-tY9" customClass="normalPoolController" customModule="Topadmin" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ViewController1" id="Dy8-jV-tY9" customClass="normalPoolController" customModule="Topadmin" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YnN-ET-nN0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -354,6 +354,9 @@
                                     <navigationItem title="普通池子" id="HI9-c4-yqI">
                                         <barButtonItem key="leftBarButtonItem" image="filter_24x24" id="4o9-Fw-dKc">
                                             <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <connections>
+                                                <action selector="filter:" destination="Dy8-jV-tY9" id="YPh-Kx-LTQ"/>
+                                            </connections>
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>
@@ -449,6 +452,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="mU7-Fe-75Q"/>
+        <segue reference="HUo-Td-iMK"/>
     </inferredMetricsTieBreakers>
 </document>
