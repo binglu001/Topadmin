@@ -62,6 +62,7 @@ class secondPoolController: UIViewController ,UITableViewDataSource,UITableViewD
                         }
                         
                     }
+                    self.tableView.reloadData()
                     self.tmpListData.removeAllObjects()
                 }
             })

@@ -60,6 +60,7 @@ class normalPoolController: UIViewController ,UITableViewDataSource,UITableViewD
                             self.listData.addObject(self.tmpListData[i])
                         }
                     }
+                    self.tableView.reloadData()
                     self.tmpListData.removeAllObjects()
                 }
 

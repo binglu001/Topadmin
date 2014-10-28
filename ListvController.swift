@@ -59,6 +59,7 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
                             self.listData.addObject(self.tmpListData[i])
                         }
                     }
+                    self.tableView.reloadData()
                     self.tmpListData.removeAllObjects()
                 }
             })
@@ -127,7 +128,7 @@ class ListvController: UIViewController ,UITableViewDataSource,UITableViewDelega
         label1.numberOfLines = 0
         label1.lineBreakMode = NSLineBreakMode.ByWordWrapping
         
-        label1.text = rowData["content"]? as NSString                      
+        label1.text = rowData["content"]? as NSString
         label2.text = rowData["user"]?["uname"] as NSString
 
         var outputFormat = NSDateFormatter()

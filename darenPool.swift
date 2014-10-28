@@ -52,6 +52,7 @@ class darenPoolController: UIViewController ,UITableViewDataSource,UITableViewDe
                         }
                         
                     }
+                    self.tableView.reloadData()
                     self.tmpListData.removeAllObjects()
                 }
             })
