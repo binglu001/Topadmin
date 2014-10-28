@@ -154,6 +154,9 @@ class normalPoolController: UIViewController ,UITableViewDataSource,UITableViewD
             var instance = segue.destinationViewController as DetailController
             instance.timeLineUrl = self.tid
         }
+        if segue.identifier == "filter" {
+            var instance = segue.destinationViewController as MyNavigationController
+        }
     }
     //返回按钮
     @IBAction func close(segue: UIStoryboardSegue){
@@ -185,6 +188,9 @@ class normalPoolController: UIViewController ,UITableViewDataSource,UITableViewD
         toggleSideMenuView()
     }
     
+    @IBAction func toggleSideMenu(sender:AnyObject){
+        toggleSideMenuView()
+    }
     
     
 }
